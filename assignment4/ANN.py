@@ -1,6 +1,6 @@
 import random
 
-NODE_COUNT_PER_LAYER =  [4,3,2]
+GLOBAL_MAP =  [4,3,2]
 
 class Node:
     def __init__(self, name):
@@ -66,13 +66,13 @@ class Node:
 if __name__ == '__main__':
 
     node = Node("A")
-    node.make_children(0, NODE_COUNT_PER_LAYER)
-    node.prety_print(0, NODE_COUNT_PER_LAYER)
+    node.make_children(0, GLOBAL_MAP)
+    node.prety_print(0, GLOBAL_MAP)
 
     print("After: ")
 
-    node.set_random_weights(0, NODE_COUNT_PER_LAYER)
-    node.prety_print(0, NODE_COUNT_PER_LAYER)
+    node.set_random_weights(0, GLOBAL_MAP)
+    node.prety_print(0, GLOBAL_MAP)
 
 
 
