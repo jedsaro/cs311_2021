@@ -21,7 +21,7 @@ class Node:
 
             self.children.append(Node(chr(ord(self.name) + 1)))
 
-        #moves to next layer and 
+        #moves to next layer and recursion
         self.children[0].make_children(current_layer + 1 , nodes_per_layer)
 
         for i in range(1, len(self.children)):
