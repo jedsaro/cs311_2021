@@ -243,19 +243,19 @@ if __name__ == '__main__':
 
 
 
-  print('\nFinding distance using Dijkstra using Heaps\n')
+  print('\nFinding distance using Dijkstra\n')
   enter_pause = input()
   t1_start = process_time_ns()
   dijkstra(maze);
   t1_stop = process_time_ns()
-  print("\nTime Taken (Dijkstra): \n ", t1_stop-t1_start/1000000000)
+  print("\nTime Taken (Dijkstra): \n ", t1_stop-t1_start)
 
 
   enter_pause = input()
 
-  print('\nFinding distance using Astar using Heaps (Manhattan)\n ')
+  print('\nFinding distance using A* (Manhattan)\n ')
   enter_pause = input()
   t2_start = process_time_ns()
   Astar(maze);
   t2_stop = process_time_ns()
-  print("\nTime Taken (A*):\n ", (t2_stop-t2_start/1000000000))
+  print("\nTime Taken (A*):\n ", (t2_stop-t2_start))
