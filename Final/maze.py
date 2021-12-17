@@ -248,7 +248,7 @@ if __name__ == '__main__':
   t1_start = process_time_ns()
   dijkstra(maze);
   t1_stop = process_time_ns()
-  print("\nTime Taken (Dijkstra): \n ", t1_stop-t1_start)
+  print("\nTime Taken (Dijkstra): \n ", (t1_stop-t1_start)/1000000000, "Secs")
 
 
   enter_pause = input()
@@ -258,4 +258,4 @@ if __name__ == '__main__':
   t2_start = process_time_ns()
   Astar(maze);
   t2_stop = process_time_ns()
-  print("\nTime Taken (A*):\n ", (t2_stop-t2_start))
+  print("\nTime Taken (A*):\n ", (t2_stop-t2_start)/1000000000, "Secs")
