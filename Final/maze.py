@@ -102,16 +102,15 @@ def generate(width, height, verbose=True):
   return lines
 
 #######################################################################################################
+
 # Manhattan distance heuristic
-def h(u,v):
-   return abs(u[1]-v[1])+abs(u[0]-v[0])
 
 # Misc functions for list conversions
-def ls_ll(G):
-    Gcopy = []
-    for i in G:
-      Gcopy.append(list(i))
-    return Gcopy
+def ls_ll(maze):
+    maze_copy = []
+    for i in maze:
+      maze_copy.append(list(i))
+    return maze_copy
   
 def ll_ls(maze):
     maze_copy = []
@@ -120,6 +119,7 @@ def ll_ls(maze):
     return maze_copy
     
 def dijkstra(maze):
+  
     # initialization
     maze_copy = ls_ll(maze)
     n = len(maze)#row
@@ -131,7 +131,8 @@ def dijkstra(maze):
     adj = [[0,1],[1,0],[-1,0],[0,-1]]
 
     # Finding start
-    # busca al agente la ubicacion de el agente, en la pocicion de el agente se le asigna 0 en weight
+    
+    # busca al agente la ubicacion de el agente, en la posicion de el agente se le asigna 0 en weight
     agent_location = [0,0]
     for y in range(n):
       for x in range(m):
@@ -144,14 +145,15 @@ def dijkstra(maze):
     while len(queue) > 0:
       
         weight, position = hq.heappop(queue)
-        
-        weights[y*m+x] = weight #goal weigth[120] = 0 end
-        visited[position[0]*m+position[1]] = True #agent visited true
+        weights[y*m+x] = weight                     #goal weigth[120] = 0 end
+        visited[position[0]*m+position[1]] = True   #agent visited true
         maze_copy[position[0]][position[1]] = MOVED #change agent to @
+        
         # Printing each iteration
-        print('\n'.join(ll_ls(maze_copy)), '\n')
+        print('\n'.join(ll_ls(maze_copy)), '\n') # return updated maze
 
         if maze[position[0]][position[1]] == GOAL:
+          
           # Printing Final
           print('FINAL\n','\n'.join(ll_ls(maze_copy)), '\n')
           return 'distance of goal is = '+ str(weight), weights
@@ -169,7 +171,8 @@ def dijkstra(maze):
             
     return 'Not found', weights
 
-def Astar(maze):
+""" def Astar(maze):
+
     #initialization
     maze_copy = ls_ll(maze)
     n = len(maze)
@@ -178,51 +181,55 @@ def Astar(maze):
     weights = [math.inf]*m*n
     queue = []
     adj = [[0,1],[1,0],[-1,0],[0,-1]]
+  
 
     # finding start
-    u = [0,0]
-    for y_ in range(n):
-      for x_ in range(m):
-        if maze[y_][x_] == AGENT:
-          u[1] = x_
-          u[0] = y_
-    weights[u[0]*m+u[1]] = 0
-    hq.heappush(queue, (0, u))
-
+    agent_location = [0,0]
+    for y in range(n):
+      for x in range(m):
+        if maze[y][x] == AGENT:
+          agent_location[1] = x
+          agent_location[0] = y
+    weights[agent_location[0]*m+agent_location[1]] = 0 #posicion 12 tiene valor a 0
+    hq.heappush(queue, (0, agent_location)) 
+    
     # finding Goal
     V = [0,0]
-    for y_ in range(n):
-      for x_ in range(m):
-        if maze[y_][x_] == GOAL:
-          V[1] = x_
-          V[0] = y_
+    for y in range(n):
+      for x in range(m):
+        if maze[y][x] == GOAL:
+          V[1] = x
+          V[0] = y
     
     while len(queue) > 0:
-        g, u = hq.heappop(queue)
-        weights[y_*m+x_] = g
-        visited[u[0]*m+u[1]] = True
-        maze_copy[u[0]][u[1]] = MOVED
+        g, agent_location = hq.heappop(queue)
+        weights[y*m+x] = g
+        visited[agent_location[0]*m+agent_location[1]] = True
+        maze_copy[agent_location[0]][agent_location[1]] = MOVED
         # Printing each iteration
         print('Next iteration\n','\n'.join(ll_ls(maze_copy)), '\n')
 
         if maze[u[0]][u[1]] == GOAL:
           # Printing Final
           print('FINAL\n','\n'.join(ll_ls(maze_copy)), '\n')
-          return 'distance of goal is = '+ str(g), weights
+          return 'Distance of goal is = '+ str(g), weights
+        
         for v in adj:
-            y_ = u[0]+v[0]
-            x_ = u[1]+v[1]
-            u_ = [y_,x_]
-            if y_>=0 and y_<n and x_>=0 and x_<m and maze[y_][x_] != WALL and visited[y_*m+x_]==False:
-              f = g + 1 + h(u_,V)
-              hq.heappush(queue, (f, [y_,x_]))
-    return 'Not found', weights
+            y = agent_location[0]+v[0]
+            print(y_)
+            x = agent_location[1]+v[1]
+            u_ = [y,x]
+            if y>=0 and y<n and x>=0 and x<m and maze[y][x] != WALL and visited[y*m+x]==False:
+              f = g + h(u_,v)
+              #return abs(u[1]-v[1])
+              hq.heappush(queue, (f, [y,x]))
+    return 'Not found', weights """
   
   ###################################################################################################################
 
 if __name__ == '__main__':
-  width = 9
-  height = 9
+  width = 128
+  height = 128
 
   args = sys.argv[1:]
   if len(args) >= 1:
@@ -249,7 +256,7 @@ if __name__ == '__main__':
   dijkstra(maze);
   t1_stop = process_time_ns()
   print("\nTime Taken (Dijkstra): \n ", (t1_stop-t1_start)/1000000000, "Secs")
-
+""" 
 
   enter_pause = input()
 
@@ -258,4 +265,4 @@ if __name__ == '__main__':
   t2_start = process_time_ns()
   Astar(maze);
   t2_stop = process_time_ns()
-  print("\nTime Taken (A*):\n ", (t2_stop-t2_start)/1000000000, "Secs")
+  print("\nTime Taken (A*):\n ", (t2_stop-t2_start)/1000000000, "Secs") """
